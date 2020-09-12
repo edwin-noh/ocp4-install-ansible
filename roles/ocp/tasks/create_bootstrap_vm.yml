@@ -1,0 +1,48 @@
+---
+
+# - name: create bootstrap vm
+#   command: >
+#     virt-install --name {{ bootstrap_node.hostname }}.{{ cluster_name }}.{{ base_domain }} 
+#     --cpu host --vcpus {{ vm_bootstrap.cpu }} 
+#     --memory {{ vm_bootstrap.ram }} 
+#     --disk pool={{ vm_storage_pool }},size={{ vm_bootstrap.disk }},format=qcow2,bus=virtio 
+#     --network {{ vm_bootstrap.network.type }}={{ vm_bootstrap.network.name }},model=virtio 
+#     --os-variant rhel8.0 --graphics type=vnc 
+#     --location {{ os_img_loc }} 
+#     -noreboot --noautoconsole
+#     --extra-args 'nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda 
+#     coreos.inst.image_url={{ coreos_url }} 
+#     coreos.inst.ignition_url={{ vm_bootstrap.ignition }} 
+#     ip={{ vm_bootstrap.network.ip }}'
+
+# - name: create master vm
+  # command: >
+  #   virt-install --name {{ item.hostname }}.{{ cluster_name }}.{{ base_domain }} 
+  #   --cpu host --vcpus {{ vm_master.cpu }} 
+  #   --memory {{ vm_master.ram }} 
+  #   --disk pool={{ vm_storage_pool }},size={{ vm_master.disk }},format=qcow2,bus=virtio 
+  #   --os-variant rhel8.0 --graphics type=vnc 
+  #   --location {{ os_img_loc }} 
+  #   --noreboot --noautoconsole
+  #   --extra-args 'nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda 
+  #   coreos.inst.image_url={{ coreos_url }} 
+  #   coreos.inst.ignition_url={{ vm_master.ignition }} 
+  #   ip={{ item.ip }}::192.168.31.1:255.255.255.0:{{ item.hostname }}.{{ cluster_name }}.{{ base_domain }}:enp1s0:none nameserver={{ dns_server }}'
+  # with_items:
+  #   "{{ master_nodes }}"
+
+- name: create app vm
+  command: >
+    virt-install --name {{ item.hostname }}.{{ cluster_name }}.{{ base_domain }} 
+    --cpu host --vcpus {{ vm_app.cpu }} 
+    --memory {{ vm_app.ram }} 
+    --disk pool={{ vm_storage_pool }},size={{ vm_app.disk }},format=qcow2,bus=virtio 
+    --os-variant rhel8.0 --graphics type=vnc 
+    --location {{ os_img_loc }} 
+    --noreboot --noautoconsole
+    --extra-args 'nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda 
+    coreos.inst.image_url={{ coreos_url }} 
+    coreos.inst.ignition_url={{ vm_app.ignition }} 
+    ip={{ item.ip }}::192.168.31.1:255.255.255.0:{{ item.hostname }}.{{ cluster_name }}.{{ base_domain }}:enp1s0:none nameserver={{ dns_server }}'
+  with_items:
+    "{{ app_nodes }}"

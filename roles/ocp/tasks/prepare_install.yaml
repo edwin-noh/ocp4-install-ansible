@@ -1,0 +1,25 @@
+---
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ os_img_loc }}"
+    state: directory
+    mode: '0777'
+
+- name: Copy treeinfo
+  template:
+    src: "treeinfo.j2"
+    dest: "{{ os_img_loc }}/.treeinfo"
+    backup: yes
+
+- name: Download coreos kernel
+  get_url:
+    url: "{{ coreos_kernel.src }}"
+    dest: "{{ coreos_kernel.dest }}/{{ coreos_kernel.name }}"
+    mode: '0777'
+
+- name: Download coreos initramfs
+  get_url:
+    url: "{{ coreos_initramfs.src }}"
+    dest: "{{ coreos_initramfs.dest }}/{{ coreos_initramfs.name }}"
+    mode: '0777'

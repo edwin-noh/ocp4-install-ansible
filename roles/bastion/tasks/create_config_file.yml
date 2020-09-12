@@ -1,0 +1,34 @@
+---
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    mode: '0777'
+
+- name: Copy install-config file
+  template:
+    src: "install-config.yaml.j2"
+    dest: "{{ install_dir }}/install-config.yaml"
+
+- name: Create manifest file
+  command: "{{ install_dir }}/openshift-install create manifests --dir={{ install_dir }}"
+
+- name: Configure master scheduling
+  lineinfile:
+    path: "{{ install_dir }}/manifests/cluster-scheduler-02-config.yml"
+    regexp: 'mastersSchedulable: true'
+    line: "  mastersSchedulable: false"
+    
+- name: Generate ignition
+  command: "{{ install_dir }}/openshift-install create ignition-configs --dir={{ install_dir }}"
+
+- name: Copy Inition files to httpd doc path
+  copy:
+    src: "{{ install_dir }}/item"
+    dest: "{{ httpdoc_loc }}/{{ item }}"
+  with_items:
+  - bootstrap.ign
+  - master.ign
+  - worker.ign
+  become: true

@@ -1,0 +1,23 @@
+---
+httpd_port: 8080
+bootstrap_host: bootstrap.ocp.edwin.home.
+bootstrap_ip: 192.168.31.101
+master0_host: master0.ocp.edwin.home.
+master0_ip: 192.168.31.110
+master1_host: master1.ocp.edwin.home.
+master1_ip: 192.168.31.111
+master2_host: master2.ocp.edwin.home.
+master2_ip: 192.168.31.112
+
+etcd0_host: etcd-0.ocp.edwin.home.
+etcd0_ip: 192.168.31.110
+etcd1_host: etcd-1.ocp.edwin.home.
+etcd1_ip: 192.168.31.111
+etcd2_host: etcd-2.ocp.edwin.home.
+etcd2_ip: 192.168.31.112
+extapi_host: api.ocp.edwin.home.
+extapi_ip: 192.168.31.10
+intapi_host: api-int.ocp.edwin.home.
+intapi_ip: 192.168.31.10
+appapi_host: xxx.apps.ocp.edwin.home.
+appapi_ip: 192.168.31.10

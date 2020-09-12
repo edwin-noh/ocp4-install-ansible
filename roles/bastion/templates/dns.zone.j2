@@ -1,0 +1,40 @@
+$TTL 1D
+@   IN SOA  @ {{ ns_domain }}. (
+            0           ; serial
+            1D          ; refresh
+            1H          ; retry
+            1W          ; expiry
+            3H )        ; minimum
+
+@           IN NS       {{ ns_domain }}.
+@           IN A        {{ dns_server }}
+
+; Bastion
+bastion     IN A        {{ bastion }}
+ns          IN A        {{ dns_server }}
+
+; OCP Node
+ocp     IN A    {{ ocp_node }}
+
+; OCP Cluster
+{{ bootstrap_node.hostname }}.{{ cluster_name }}   IN A     {{ bootstrap_node.ip }}
+
+{% for master in master_nodes %}
+{{ master.hostname }}.{{ cluster_name }}   IN A    {{ master.ip }}
+{% endfor %}
+
+{% for etcd in etcd_nodes %}
+{{ etcd.hostname }}.{{ cluster_name }}   IN A    {{ etcd.ip }}
+{% endfor %}
+
+{% for etcd in etcd_nodes %}
+_etcd-server-ssl._tcp.{{ cluster_name }}.{{ base_domain }}.   IN SRV  0   10  2380    {{ etcd.hostname }}.{{ cluster_name }}.{{ base_domain }}.
+{% endfor %}
+
+{% for router in router_nodes %}
+{{ router.hostname }}.{{ cluster_name }}   IN A    {{ router.ip }}
+{% endfor %}
+
+{% for lb in loadbalancer %}
+{{ lb.hostname }}.{{ cluster_name }}   IN A    {{ lb.ip }}
+{% endfor %}

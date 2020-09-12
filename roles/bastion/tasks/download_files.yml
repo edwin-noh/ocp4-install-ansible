@@ -1,0 +1,25 @@
+---
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    mode: '0777'
+
+- name: Download installer programs
+  get_url:
+    url: "{{ installer.src }}"
+    dest: "{{ installer.dest }}/{{ installer.name }}"
+    mode: '0777'
+    
+- name: Unarchive installer
+  unarchive:
+    src: "{{ installer.dest }}/{{ installer.name }}"
+    dest: "{{ installer.dest }}"
+    mode: '0777'
+
+- name: Download coreos raw
+  get_url:
+    url: "{{ rhcos.src }}"
+    dest: "{{ rhcos.dest }}/{{ rhcos.name }}"
+    mode: '0777'

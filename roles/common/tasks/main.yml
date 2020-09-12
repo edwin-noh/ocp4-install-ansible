@@ -1,0 +1,4 @@
+---
+
+- include: verify_dns_config.yml
+#- include: verify_port_open.yml

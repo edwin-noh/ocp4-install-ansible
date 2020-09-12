@@ -1,0 +1,6 @@
+---
+- include: configure_httpd.yml
+- include: configure_dns.yml
+- include: configure_haproxy.yml
+- include: download_files.yml
+- include: create_config_file.yml

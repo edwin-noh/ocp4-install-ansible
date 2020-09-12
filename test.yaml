@@ -1,0 +1,102 @@
+---
+# This playbook deploys openshift.
+
+- name: apply common configuration to all nodes
+  hosts: ocp
+  remote_user: root
+
+  tasks:
+  #   - name: Verify DNS etcd SRV records
+  #     debug:
+  #       msg: "{{ lookup('dig', '_etcd-server-ssl._tcp.{{ cluster_name }}.{{ base_domain }}/SRV', 'flat=0', wantlist=True) | map(attribute='target') | list | join(', ') }}"
+  #     register: result
+  #     vars:
+  #       fqdn: "{{item.hostname}}.{{ cluster_name }}.{{ base_domain }}."
+  #     failed_when: fqdn not in result
+  #     with_items: "{{ etcd_nodes }} "
+
+    # - name: Download install programs
+    #   get_url:
+    #     url: "{{ item.src }}"
+    #     dest: "{{ item.dest }}"
+    #     mode: '0777'
+
+    # - name: Unzip installer
+    #   command: tar -xvzf {{ install_loc }}/*.tar.gz
+    
+    # - name: Download coreos raw
+    #   get_url:
+    #     url: "{{ rhcos.src }}"
+    #     dest: "{{ rhcos.dest }}/{{ rhcos.name }}"
+    #     mode: '0777'
+    
+    
+    
+    # - name: Create a directory if it does not exist
+    #   file:
+    #     path: /tmp/ocp-install
+    #     state: directory
+    #     mode: '0777'
+
+    # - name: Copy install-config file
+    #   template:
+    #     src: "install-config.yaml.j2"
+    #     dest: "/tmp/ocp/install-config.yaml"
+    
+    # - name: Generate manifest
+    #   command: /tmp/ocp/openshift-install create manifests --dir=/tmp/ocp
+    
+    # - name: Configure master scheduling
+    #   lineinfile:
+    #     path: /tmp/ocp/manifests/cluster-scheduler-02-config.yml
+    #     regexp: 'mastersSchedulable: true'
+    #     line: "  mastersSchedulable: false"
+    
+    # - name: Generate ignition
+    #   command: /tmp/ocp/openshift-install create ignition-configs --dir=/tmp/ocp
+    
+    # - name: Convert bootstrap ignition file to json
+    #   shell: cat /tmp/ocp/master.ign | jq > /tmp/ocp/ms.ign
+        
+    
+    # - name: Convert ignition file to json
+    #   lineinfile:
+    #     path: /tmp/ocp/manifests/cluster-scheduler-02-config.yml
+    #     regexp: 'mastersSchedulable: true'
+    #     line: "  mastersSchedulable: false"
+    # - name: Port checking
+    #   wait_for:
+    #     host: bastion
+    #     port: 80
+    #     timeout: 5
+      # - name: Copy Inition files to httpd doc path
+      #   copy:
+      #     src: "{{ install_dir }}/{{ item }}"
+      #     dest: "{{ httpdoc_loc }}/{{ item }}"
+      #   with_items:
+      #   - bootstrap.ign
+      #   - master.ign
+      #   - worker.ign
+      - name: Create a directory if it does not exist
+        file:
+          path: "{{ os_img_loc }}"
+          state: directory
+          mode: '0777'
+
+      - name: Copy treeinfo
+        template:
+          src: "treeinfo.j2"
+          dest: "{{ os_img_loc }}/.treeinfo"
+          backup: yes
+
+      - name: Download coreos kernel
+        get_url:
+          url: "{{ coreos_kernel.src }}"
+          dest: "{{ coreos_kernel.dest }}/{{ coreos_kernel.name }}"
+          mode: '0777'
+
+      - name: Download coreos initramfs
+        get_url:
+          url: "{{ coreos_initramfs.src }}"
+          dest: "{{ coreos_initramfs.dest }}/{{ coreos_initramfs.name }}"
+          mode: '0777'

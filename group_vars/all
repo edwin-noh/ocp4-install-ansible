@@ -1,0 +1,97 @@
+---
+# OCP 
+cluster_name: ocp
+base_domain: edwin.home
+ocp_version: 4.5.2
+
+bootstrap_node: 
+    hostname: bootstrap
+    ip: 192.168.31.101
+
+master_nodes:
+  - hostname: master0
+    ip: 192.168.31.110
+  - hostname: master1
+    ip: 192.168.31.111
+  - hostname: master2
+    ip: 192.168.31.112
+
+app_nodes:
+  - hostname: app0
+    ip: 192.168.31.120
+  - hostname: app1
+    ip: 192.168.31.121
+
+router_nodes:
+  - hostname: app0
+    ip: 192.168.31.120
+  - hostname: app1
+    ip: 192.168.31.121
+
+infra_nodes: [] 
+
+etcd_nodes:
+  - hostname: etcd-0
+    ip: 192.168.31.110
+  - hostname: etcd-1
+    ip: 192.168.31.111
+  - hostname: etcd-2
+    ip: 192.168.31.112
+
+loadbalancer: 
+  - hostname: api
+    ip: 192.168.31.10
+  - hostname: api-int
+    ip: 192.168.31.10
+  - hostname: apps
+    ip: 192.168.31.10
+  - hostname: '*.apps'
+    ip: 192.168.31.10
+
+
+
+#DNS server
+ns_domain: ns.edwin.home
+dns_server: 192.168.31.10
+
+dns_zone_file: edwin.home.zone
+dns_rev_zone_file: 31.168.192.in-addr.rev
+dns_rev_zone_ip_range: 31.168.192
+
+bastion: 192.168.31.10
+ocp_node: 192.168.31.20
+internal_lb: 192.168.31.10
+external_lb: 192.168.31.10
+
+# HTTP Server
+httpd_port: 8080
+
+
+
+vm_bootstrap:
+    cpu: 4
+    ram: 16384
+    disk: 100
+    network:
+        name: bridge0 
+        type: bridge
+        ip: "{{ bootstrap_node.ip }}::192.168.31.1:255.255.255.0:{{ bootstrap_node.hostname }}.{{ cluster_name }}.{{ base_domain }}:enp1s0:none nameserver={{ dns_server }}"
+    ignition: "http://192.168.31.10:8080/bootstrap.ign"
+
+vm_master:
+    cpu: 4
+    ram: 16384
+    disk: 120
+    network:
+        name: bridge0 
+        type: bridge        
+    ignition: "http://192.168.31.10:8080/master.ign"
+
+vm_app:
+    cpu: 4
+    ram: 16384
+    disk: 120
+    network:
+        name: bridge0 
+        type: bridge        
+    ignition: "http://192.168.31.10:8080/worker.ign"

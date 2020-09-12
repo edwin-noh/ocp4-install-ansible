@@ -1,0 +1,17 @@
+$TTL    1D
+@       IN      SOA   {{ base_domain }}. {{ ns_domain }}. (
+                      0          ; Serial
+                      1D         ; Refresh
+                      1H         ; Retry
+                      1W         ; Expire
+                      3H )       ; Minimum
+
+@   IN NS   ns.
+10  IN PTR  ns.
+{{ bootstrap_node.ip.split('.')[-1][-3:] }}  IN PTR  {{ bootstrap_node.hostname }}.{{ cluster_name }}.{{ base_domain }}.
+{% for master in master_nodes %}
+{{ master.ip.split('.')[-1][-3:] }}    IN PTR  {{ master.hostname }}.{{ cluster_name }}.{{ base_domain }}.
+{% endfor %}
+{% for router in router_nodes %}
+{{ router.ip.split('.')[-1][-3:] }}    IN PTR  {{ router.hostname }}.{{ cluster_name }}.{{ base_domain }}.
+{% endfor %}

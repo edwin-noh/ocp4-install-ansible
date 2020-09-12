@@ -1,0 +1,47 @@
+---
+#Set up HA proxy as a load balancer  
+
+- name: Install HAProxy
+  yum:
+    name: "haproxy"
+    state: present
+
+- name: Configure haproxy.cfg
+  template:
+    src: "haproxy.cfg.j2"
+    dest: "/etc/haproxy/haproxy.cfg"
+    backup: yes
+
+- name: Open LB 6443 port
+  firewalld:
+    port: 6443/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Open LB 22623 port
+  firewalld:
+    port: 22623/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Open LB http port
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Open LB https port
+  firewalld:
+    service: https
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Enable service haproxy
+  service:
+    name: haproxy
+    enabled: yes
+    state: restarted

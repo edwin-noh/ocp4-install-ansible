@@ -1,0 +1,14 @@
+---
+# This playbook deploys openshift.
+
+- name: Run pre-requsite
+  hosts: bastion
+  remote_user: root
+  roles:
+    - bastion
+
+- name: Verify pre-requisite
+  hosts: all
+  remote_user: root
+  roles:
+    - common

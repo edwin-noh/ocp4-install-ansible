@@ -1,0 +1,88 @@
+---
+#Set up HA proxy as a load balancer
+
+- name: Install DNS bind packages
+  yum:
+    name:
+      - bind
+      - bind-utils
+    state: present
+    
+- name: Configure named.conf / listen port 53
+  lineinfile:
+    path: /etc/named.conf
+    regexp: 'listen-on port 53'
+    line: "\tlisten-on port 53 { any; };"
+
+- name: Configure named.conf / listen port v6 53
+  lineinfile:
+    path: /etc/named.conf
+    regexp: 'listen-on-v6 port 53'
+    line: "\tlisten-on-v6 port 53 { none; };"
+
+- name: Configure named.conf / allow-query
+  lineinfile:
+    path: /etc/named.conf
+    regexp: 'allow-query'
+    line: "\tallow-query     { any; };"
+    
+- name: Check zone already exists
+  shell: "grep -i '{{ base_domain }}' /etc/named.rfc1912.zones"
+  register: result      
+  ignore_errors: yes
+
+- name: Add zone in named.zone
+  blockinfile:
+    path: /etc/named.rfc1912.zones
+    marker: "// {mark} ANSIBLE MANAGED BLOCK "
+    block: |
+      zone "{{ base_domain }}" IN {
+              type master;
+              file "/etc/named/{{ dns_zone_file }}";
+              allow-update { none; };
+
+      zone "{{ dns_rev_zone_ip_range }}.in-addr.arpa" IN {
+              type master;
+              file "/etc/named/{{ dns_rev_zone_file }}";
+              allow-update { none; };
+  when:
+    result.stdout == ''
+      
+- name: Copy DNS zone config file
+  template:
+    src: "dns.zone.j2"
+    dest: "/etc/named/{{ dns_zone_file }}"
+    backup: yes
+    
+- name: Copy DNS rev. zone config file
+  template:
+    src: "dns.rev.zone.j2"
+    dest: "/etc/named/{{ dns_rev_zone_file }}"
+    backup: yes
+
+- name: Open dns service firewall
+  firewalld:
+    service: dns
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Open firewall 54 tcp port
+  firewalld:
+    port: 53/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Open firewall 54 udp port
+  firewalld:
+    port: 53/udp
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Enable DNS service
+  service:
+    name: named
+    enabled: yes
+    state: restarted
