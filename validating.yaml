@@ -1,5 +1,5 @@
 - name: Verify pre-requisite
-  hosts: all
+  hosts: bastion
   remote_user: root
   roles:
     - common
