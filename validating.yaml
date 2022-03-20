@@ -1,0 +1,5 @@
+- name: Verify pre-requisite
+  hosts: all
+  remote_user: root
+  roles:
+    - common
