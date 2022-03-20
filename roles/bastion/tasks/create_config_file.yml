@@ -31,4 +31,3 @@
   - bootstrap.ign
   - master.ign
   - worker.ign
-  become: true
