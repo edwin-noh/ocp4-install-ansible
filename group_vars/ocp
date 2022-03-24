@@ -1,13 +1,15 @@
 os_img_loc: /var/iso/rhcos4.5.2
 
+download_loc: ./files
+
 coreos_kernel:
   name: coreos_kernel
-  src: "https://access.cdn.redhat.com/content/origin/files/sha256/f2/f2daa2aad7184702e12cf7c82cc1e15dd762508fd789aef6418618f10f7023bb/rhcos-4.5.2-x86_64-installer-kernel-x86_64?user=9406de7cf83133213a3d5431e9b5ce57&_auth_=1595390999_3a6e7786b20d3639036835082fd8ab3d"
+  src: "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.10/4.10.3/rhcos-4.10.3-x86_64-metal.x86_64.raw.gz"
   dest: "{{ os_img_loc }}"
 
 coreos_initramfs:
   name: coreos_initramfs.img
-  src: "https://access.cdn.redhat.com/content/origin/files/sha256/2b/2b3fcc46e7b03aee2fea5886b695dd6dc8cb953a0ebf10c80e25ebc2e489fec0/rhcos-4.5.2-x86_64-installer-initramfs.x86_64.img?user=9406de7cf83133213a3d5431e9b5ce57&_auth_=1595390999_70a50ed0cf5a5d421b352e80fadbb721"
+  src: "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.10/4.10.3/rhcos-4.10.3-x86_64-live-rootfs.x86_64.img"
   dest: "{{ os_img_loc }}"
 
 coreos_url: http://192.168.31.10:8080/coreos.raw.gz
