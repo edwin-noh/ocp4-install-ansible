@@ -1,6 +1,6 @@
 ---
 
-- name: download ocp files
+- name: download files
   hosts: bastion
   gather_facts: False
   vars_files:

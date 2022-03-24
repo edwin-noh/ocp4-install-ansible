@@ -1,0 +1,13 @@
+---
+
+- name: gen_ssh_key
+  hosts: bastion
+  gather_facts: False
+  vars_files:
+    - group_vars/bastion
+  
+  tasks:
+  - name: Generate SSH key
+    command : ssh-keygen -t ed25519 -N '' -f "{{ ssh_key.temp_loc }}"
+    args:
+      creates: "{{ ssh_key.temp_loc }}"
