@@ -6,9 +6,18 @@
   vars_files:
     - group_vars/bastion
   
-  # Generate Key
+  # Create folder for ssh
   tasks:
+  - name: Create a temp directory for ssh key
+    file:
+      path: "{{ ssh_key.temp_loc }}"
+      state: directory
+      mode: '0755'
+
+  # Generate Key / replace existing key
   - name: Generate SSH key
     command : ssh-keygen -t ed25519 -N '' -f "{{ ssh_key.temp_loc }}/{{ ssh_key.name }}"
     args:
       creates: "{{ ssh_key.temp_loc }}/{{ ssh_key.name }}"
+
+  # 
