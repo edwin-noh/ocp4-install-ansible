@@ -13,13 +13,13 @@
 
   - name: Download coreos raw
     get_url:
-      url: "{{ rhcos.src }}"
-      dest: "{{ download_loc }}/coreos.raw.gz"
+      url: "{{ rhcos_iso.url }}"
+      dest: "{{ download_loc }}/{{ rhcos_iso.name }}"
       mode: '0755'
   
   - name: Download OCP installer
     get_url:
       url: "{{ ocp_installer.download_url }}"
       dest: "{{ download_loc }}/installer.tar.gz"
-      mode: '0755'  
+      mode: '0755'
   
