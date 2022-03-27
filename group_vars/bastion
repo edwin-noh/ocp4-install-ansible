@@ -23,7 +23,6 @@ ssh_key:
   name: ocp-key
 
 # installer vars
-ocp_inst:
+ocp_installer:
   download_url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz"
-  file_loc:
-  
+  file_loc: 

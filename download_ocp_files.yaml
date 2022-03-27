@@ -1,8 +1,8 @@
 - name: download files
   hosts: bastion
   gather_facts: False
-  vars_files:
-    - group_vars/ocp
+  # vars_files:
+  #   - group_vars/ocp
   
   tasks:
   - name: Create a directory if it does not exist
@@ -19,6 +19,7 @@
   
   - name: Download OCP installer
     get_url:
-      url: "{{ }}"
-      dest: "{{ download_loc }}/coreos.raw.gz"
-      mode: '0755'
+      url: "{{ ocp_installer.download_url }}"
+      dest: "{{ download_loc }}/installer.tar.gz"
+      mode: '0755'  
+  

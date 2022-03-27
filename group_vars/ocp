@@ -1,4 +1,4 @@
-os_img_loc: /var/iso/rhcos4.5.2
+os_img_loc: /var/iso/coreos
 
 download_loc: ./files
 
