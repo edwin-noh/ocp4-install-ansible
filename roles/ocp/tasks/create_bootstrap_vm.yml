@@ -11,7 +11,7 @@
     --location {{ os_img_loc }} 
     -noreboot --noautoconsole
     --extra-args 'nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda 
-    coreos.inst.image_url={{ coreos_url }} 
+    coreos.live.rootfs_url={{ coreos_url }} 
     coreos.inst.ignition_url={{ vm_bootstrap.ignition }} 
     ip={{ vm_bootstrap.network.ip }}'
 
@@ -25,7 +25,7 @@
   #   --location {{ os_img_loc }} 
   #   --noreboot --noautoconsole
   #   --extra-args 'nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda 
-  #   coreos.inst.image_url={{ coreos_url }} 
+  #   coreos.live.rootfs_url={{ coreos_url }} 
   #   coreos.inst.ignition_url={{ vm_master.ignition }} 
   #   ip={{ item.ip }}::192.168.31.1:255.255.255.0:{{ item.hostname }}.{{ cluster_name }}.{{ base_domain }}:enp1s0:none nameserver={{ dns_server }}'
   # with_items:
@@ -41,7 +41,7 @@
 #     --location {{ os_img_loc }} 
 #     --noreboot --noautoconsole
 #     --extra-args 'nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda 
-#     coreos.inst.image_url={{ coreos_url }} 
+#     coreos.live.rootfs_url={{ coreos_url }} 
 #     coreos.inst.ignition_url={{ vm_app.ignition }} 
 #     ip={{ item.ip }}::192.168.31.1:255.255.255.0:{{ item.hostname }}.{{ cluster_name }}.{{ base_domain }}:enp1s0:none nameserver={{ dns_server }}'
 #   with_items:
