@@ -21,3 +21,9 @@ pull_secret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZ
 ssh_key:
   temp_loc: ./ssh_key/
   name: ocp-key
+
+# installer vars
+ocp_inst:
+  download_url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz"
+  file_loc:
+  

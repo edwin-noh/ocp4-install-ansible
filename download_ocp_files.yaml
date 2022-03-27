@@ -18,3 +18,9 @@
       url: "{{ rhcos.src }}"
       dest: "{{ download_loc }}/coreos.raw.gz"
       mode: '0755'
+  
+  - name: Download OCP installer
+    get_url:
+      url: "{{ }}"
+      dest: "{{ download_loc }}/coreos.raw.gz"
+      mode: '0755'

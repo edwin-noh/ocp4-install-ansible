@@ -3,8 +3,11 @@
 - name: gen_ssh_key
   hosts: bastion
   gather_facts: False
-  vars_files:
-    - group_vars/bastion
+  #vars_files:
+  #  - group_vars/bastion
+  vars:
+      test: testvar
+
   
   # Create folder for ssh
   tasks:
