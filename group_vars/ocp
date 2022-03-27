@@ -1,6 +1,6 @@
 os_img_loc: /var/iso/coreos
 
-download_loc: ./files
+
 
 coreos_kernel:
   name: coreos_kernel

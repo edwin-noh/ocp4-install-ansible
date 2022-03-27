@@ -4,6 +4,8 @@ install_dir: /var/www/html/ocp-install
 coreos_url: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.10/4.10.3/rhcos-4.10.3-x86_64-metal.x86_64.raw.gz
 coreos_iso_dir: /var/coreos
 
+download_loc: ./files
+
 installer:
   name: installer.tar.gz
   src: "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz"
