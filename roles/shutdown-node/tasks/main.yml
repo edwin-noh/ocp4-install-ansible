@@ -1,2 +1,3 @@
 ---
-# tasks file for galaxy-test
+# tasks file for ocp shutdown
+- include: ocp_login.yml
