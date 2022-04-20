@@ -1,0 +1,9 @@
+---
+# This playbook is shutting down openshift.
+
+- name: shutting down openshift
+  hosts: bastion
+  remote_user: root
+  
+  roles:
+    - shutdown-node
