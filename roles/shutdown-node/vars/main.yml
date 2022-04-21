@@ -1,2 +1,3 @@
 ---
-# vars file for galaxy-test
+
+OCP_SERVER: "https://api.ocp.edwin.home:6443"
