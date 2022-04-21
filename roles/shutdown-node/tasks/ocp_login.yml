@@ -7,5 +7,6 @@
 - name: oc login
   shell: oc -n openshift-kube-apiserver-operator get secret kube-apiserver-to-kubelet-signer -o jsonpath='{.metadata.annotations.auth\.openshift\.io/certificate-not-after}' | date -d -
   register: expdate
-
-  failed_when: expdate < (date -d "+7 days")
+- debug:
+    msg: "{{ expdate }}"
+  failed_when: expdate < $(date -d "+7 days")
