@@ -9,4 +9,4 @@
   register: expdate
 - debug:
     msg: "{{ expdate }}"
-  failed_when: expdate < $(date -d "+7 days")
+  failed_when: "expdate < $(date -d '+7 days')"
