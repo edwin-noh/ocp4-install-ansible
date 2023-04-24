@@ -76,7 +76,7 @@ vm_bootstrap:
         name: bridge0 
         type: bridge
         ip: "{{ bootstrap_node.ip }}::192.168.31.1:255.255.255.0:{{ bootstrap_node.hostname }}.{{ cluster_name }}.{{ base_domain }}:enp1s0:none nameserver={{ dns_server }}"
-    ignition: "http://192.168.31.10:8080/bootstrap.ign"
+    ignition: "http://192.168.31.10:8080/ocp-412/bootstrap.ign"
 
 vm_master:
     cpu: 4
@@ -85,7 +85,7 @@ vm_master:
     network:
         name: bridge0 
         type: bridge        
-    ignition: "http://192.168.31.10:8080/master.ign"
+    ignition: "http://192.168.31.10:8080/ocp-412/master.ign"
 
 vm_app:
     cpu: 4
@@ -94,4 +94,4 @@ vm_app:
     network:
         name: bridge0 
         type: bridge        
-    ignition: "http://192.168.31.10:8080/worker.ign"
+    ignition: "http://192.168.31.10:8080/ocp-412/worker.ign"

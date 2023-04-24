@@ -12,6 +12,6 @@ coreos_initramfs:
   src: "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.10/4.10.3/rhcos-4.10.3-x86_64-live-rootfs.x86_64.img"
   dest: "{{ os_img_loc }}"
 
-coreos_url: http://192.168.31.10:8080/coreos.raw.gz
+coreos_url: http://192.168.31.10:8080/ocp-412/rhcos-live-rootfs.x86_64.img
 
 vm_storage_pool: ocp-nodes
