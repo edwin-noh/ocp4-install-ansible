@@ -11,7 +11,7 @@
       block:
         - name: login
           tags: check_nodes
-          ansible.builtin.command: oc login https://api.ocp.edwin.home:6443 --insecure-skip-tls-verify=true -u edwin -p Shrmsdnr1217!
+          ansible.builtin.command: oc login https://api.ocp.edwin.home:6443 --insecure-skip-tls-verify=true -u  -p 
 
         - name: Get nodes status
           tags: check_nodes
