@@ -1,3 +1,6 @@
+[test]
+192.168.31.10 ansible_ssh_private_key_file=~/.ssh/ansible-key
+
 [bastion]
 #127.0.0.1   ansible_connection=local
 #localhost   ansible_connection=local
