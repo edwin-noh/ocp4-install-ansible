@@ -8,7 +8,10 @@ OCP installation through ansible
 
 Basically Ansible inventory describes Ansible mananged nodes(hosts) list. Host can be passed in command line but inventory is the way to manage list of nodes with proper grouping to run commands for multiple nodes.
 
-Define hosts
+- Define hosts
+
+
+- Encrypt password var file
 
 ```
 ansible-vault create var.yaml
