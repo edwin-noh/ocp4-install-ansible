@@ -5,13 +5,15 @@
   gather_facts: false
   # environment:
   #   KUBECONFIG: "/home/user1/.kube/config-kubeadmin"
+  vars_files:
+    - ./var.yaml
   tasks:
     - name: Get and print nodes
       tags: check_nodes
       block:
         - name: login
           tags: check_nodes
-          ansible.builtin.command: oc login https://api.ocp.edwin.home:6443 --insecure-skip-tls-verify=true -u  -p 
+          ansible.builtin.command: oc login https://api.ocp.edwin.home:6443 --insecure-skip-tls-verify=true -u edwin -p {{ ocp_password }} 
 
         - name: Get nodes status
           tags: check_nodes
